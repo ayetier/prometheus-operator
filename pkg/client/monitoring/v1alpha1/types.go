@@ -135,12 +135,17 @@ type AlertingSpec struct {
 type StorageSpec struct {
 	// Name of the StorageClass to use when requesting storage provisioning. More
 	// info: https://kubernetes.io/docs/user-guide/persistent-volumes/#storageclasses
+	// DEPRECATED
 	Class string `json:"class"`
 	// A label query over volumes to consider for binding.
+	// DEPRECATED
 	Selector *metav1.LabelSelector `json:"selector"`
 	// Resources represents the minimum resources the volume should have. More
 	// info: http://kubernetes.io/docs/user-guide/persistent-volumes#resources
+	// DEPRECATED
 	Resources v1.ResourceRequirements `json:"resources"`
+	// Pvc A pvc spec to be used by the Prometheus statefulsets.
+	VolumeClaimTemplate v1.PersistentVolumeClaim `json:"volumeClaimTemplate,omitempty"`
 }
 
 // AlertmanagerEndpoints defines a selection of a single Endpoints object
@@ -154,6 +159,8 @@ type AlertmanagerEndpoints struct {
 	Port intstr.IntOrString `json:"port"`
 	// Scheme to use when firing alerts.
 	Scheme string `json:"scheme"`
+	// Prefix for the HTTP path alerts are pushed to.
+	PathPrefix string `json:"pathPrefix"`
 }
 
 // ServiceMonitor defines monitoring for a set of services.
